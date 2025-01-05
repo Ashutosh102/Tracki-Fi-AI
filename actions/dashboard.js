@@ -1,9 +1,11 @@
 "use server";
 
+import { request } from "@arcjet/next";
 import aj from "@/lib/arcjet";
 import { db } from "@/lib/prisma";
 import { auth } from "@clerk/nextjs/server";
-import { revalidatePath } from "next/cache";
+import { revalidatePath } from "next/cache"; 
+
 
 const serializeTransaction = (obj) => {
   const serialized = { ...obj };
@@ -129,6 +131,7 @@ export async function createAccount(data) {
     revalidatePath("/dashboard");
     return { success: true, data: serializedAccount };
   } catch (error) {
+    console.error("error yeh hai", error);
     throw new Error(error.message);
   }
 }
